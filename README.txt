@@ -1,1 +1,1 @@
-# Install tools (Reluplex, Marabou, ReluVal, NNV)chmod +x setup_tools.sh./setup_tools.sh# Run cases (Only P4, Network19 is considered for this test)# Results are logged into the "logs" folderchmod +x run_tools.sh./run_tools.sh
+# Install tools (Reluplex, Marabou, ReluVal, NNV)chmod +x setup_tools.sh./setup_tools.sh# Run cases (subsets of input range of the property 1-4 are tested for a fast comparison)# Results are logged into the "logs" folderchmod +x run_tools.sh./run_tools.sh
