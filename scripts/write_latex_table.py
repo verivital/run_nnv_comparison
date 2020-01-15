@@ -138,7 +138,7 @@ for p in range(1,property_num+1):
 
 
     str_temp = str_temp + '\\hline\n\\end{tabular}\n\\end{adjustbox}\n\\end{table}'
-    filename = 'table_property'+str(p)+'.txt'
+    filename = 'table_property'+str(p)+'.tex'
     f = open(filename, 'w')
     f.write(str_temp)
     f.close()
