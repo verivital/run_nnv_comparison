@@ -1,1 +1,10 @@
-# The comparison runs in linux with python and matlab installed# Install tools (Reluplex, Marabou, ReluVal, NNV)chmod +x setup_tools.sh./setup_tools.sh# Run cases (subsets of input range of the property 1-4 are tested for a fast comparison)# Results are logged into the "logs" folder# comparison tables in latex are created for each propertychmod +x run_tools.sh./run_tools.sh
+# The comparison runs in linux with python3 (with numpy) and matlab installed
+# Install tools (Reluplex, Marabou, ReluVal, NNV)
+chmod +x setup_tools.sh
+./setup_tools.sh
+
+# Run cases (subsets of input range of the property 1-4 are tested for a fast comparison)
+# Results are logged into the "logs" folder
+# comparison tables in latex are created for each property
+chmod +x run_tools.sh
+./run_tools.sh
