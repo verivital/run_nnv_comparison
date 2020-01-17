@@ -3,16 +3,16 @@
 echo "Install ReluVal"
 git clone https://github.com/tcwangshiqi-columbia/ReluVal
 mkdir -p ReluVal/OpenBLAS
-sudo apt-get install libopenblas-base
+apt-get install libopenblas-base
 wget https://github.com/xianyi/OpenBLAS/archive/v0.3.6.tar.gz
 tar -xzf v0.3.6.tar.gz
 cd OpenBLAS-0.3.6
 make
 make PREFIX=$(pwd) install
 cd ..
-sudo mv $(pwd)/OpenBLAS-0.3.6/* $(pwd)/ReluVal/OpenBLAS
-sudo rm -r OpenBLAS-0.3.6
-sudo rm -r v0.3.6.tar.gz 
+mv $(pwd)/OpenBLAS-0.3.6/* $(pwd)/ReluVal/OpenBLAS
+rm -r OpenBLAS-0.3.6
+rm -r v0.3.6.tar.gz 
 
 cd ReluVal
 make
@@ -38,7 +38,7 @@ cd ..
 cd ..
 
 echo "Install Marabou"
-sudo apt install cmake
+apt install cmake
 git clone https://github.com/NeuralNetworkVerification/Marabou.git
 cd Marabou
 mkdir build
