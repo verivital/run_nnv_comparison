@@ -2,6 +2,18 @@ import numpy as np
 import  copy as cp
 import os
 
+def is_codeocean():
+    if os.path.isdir("/codeocean-true"):
+        return True
+    else:
+        return False
+
+if is_codeocean():
+    path_nnv = "/code/"
+else:
+    path_nnv = "../nnv/code/"
+
+
 def write_property_marabou(p, x, y, mean, std):
     x_temp = (np.array(x).transpose()-np.array([mean[:-1]]).transpose())/np.array([std[:-1]]).transpose()
     temp = (np.array(y)[:,-1] -  np.dot(np.array(y)[:,:-1], np.repeat(mean[-1], len(y[0])-1, axis=0)))/np.array(std[-1])
@@ -71,7 +83,8 @@ def write_property_reluval(p,x):
     f.close()
 
 def write_property_nnv_star(p,x,y):
-    filename = '../nnv/code/nnv/examples/Submission/CAV2020/verify_P0_N00_star.m'
+    global path_nnv
+    filename = path_nnv + 'nnv/examples/Submission/CAV2020/verify_P0_N00_star.m'
     f = open(filename, 'r')
     contents = f.readlines()
     f.close()
@@ -120,7 +133,7 @@ def write_property_nnv_star(p,x,y):
     f.close()
 
 def write_property_nnv_abs(p,x,y):
-    filename = '../nnv/code/nnv/examples/Submission/CAV2020/verify_P0_N00_abs.m'
+    filename = path_nnv + 'nnv/examples/Submission/CAV2020/verify_P0_N00_abs.m'
     f = open(filename, 'r')
     contents = f.readlines()
     f.close()
@@ -170,7 +183,7 @@ def write_property_nnv_abs(p,x,y):
 
 
 def write_property_nnv_star_appr(p,x,y):
-    filename = '../nnv/code/nnv/examples/Submission/CAV2020/verify_P0_N00_star_appr.m'
+    filename = path_nnv + 'nnv/examples/Submission/CAV2020/verify_P0_N00_star_appr.m'
     f = open(filename, 'r')
     contents = f.readlines()
     f.close()
@@ -219,7 +232,7 @@ def write_property_nnv_star_appr(p,x,y):
     f.close()
 
 def write_property_nnv_zono(p,x,y):
-    filename = '../nnv/code/nnv/examples/Submission/CAV2020/verify_P0_N00_zono.m'
+    filename = path_nnv + 'nnv/examples/Submission/CAV2020/verify_P0_N00_zono.m'
     f = open(filename, 'r')
     contents = f.readlines()
     f.close()
