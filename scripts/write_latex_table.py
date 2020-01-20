@@ -97,9 +97,13 @@ def get_data_reluval(reluval):
 
 
 def get_data_nnv(nnv):
-    f = open(nnv, 'r')
-    contents = f.readlines()
-    f.close()
+    try:
+        f = open(nnv, 'r')
+        contents = f.readlines()
+    except:
+        print("error parsing nnv results")
+    finally:
+        f.close()
     result = contents[0][:-1]
     num = contents[1][23:-1]
     value = contents[2][12:-1]

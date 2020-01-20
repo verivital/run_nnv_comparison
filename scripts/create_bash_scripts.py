@@ -17,7 +17,7 @@ def create_bash(p):
     for i in range(1,network_n1+1):
         for j in range(1,network_n2+1):
             line_temp = 'timeout --foreground --signal=SIGQUIT $TIMEOUT ./Marabou/build/Marabou Marabou/resources/nnet/acasxu/ACASXU_experimental_v2a_'\
-                        +str(i)+'_'+str(j)+'.nnet Marabou/resources/properties/property_temp'+str(p)+'.txt 2>&1 | tee logs/logs_mara/results_p'+str(p)+'_n'+str(i)+str(j)+'.txt\n'
+                        +str(i)+'_'+str(j)+'.nnet Marabou/resources/properties/property_temp'+str(p)+'.txt 2>&1 | tee ' + path_logs + 'logs_mara/results_p'+str(p)+'_n'+str(i)+str(j)+'.txt\n'
             lines = lines + line_temp
 
     f.write(lines)
@@ -32,7 +32,7 @@ def create_bash(p):
             line_temp = 'timeout --foreground --signal=SIGQUIT $TIMEOUT ./Marabou/build/Marabou Marabou/resources/nnet/acasxu/ACASXU_experimental_v2a_'\
                         +str(i)+'_'+str(j)+'.nnet Marabou/resources/properties/property_temp'+str(p)+\
                         '.txt --dnc --initial-divides=4 --initial-timeout=5 --num-online-divides=4 --timeout-factor=1.5 --num-workers=8 2>&1 | ' \
-                        'tee logs/logs_dnc/results_p'+str(p)+'_n'+str(i)+str(j)+'.txt\n'
+                        'tee ' + path_logs + 'logs_dnc/results_p'+str(p)+'_n'+str(i)+str(j)+'.txt\n'
             lines = lines + line_temp
 
     f.write(lines)
@@ -45,7 +45,7 @@ def create_bash(p):
     for i in range(1,network_n1+1):
         for j in range(1,network_n2+1):
             line_temp = 'timeout --foreground --signal=SIGQUIT $TIMEOUT ./ReluVal/network_test '+str(p)+' ./ReluVal/nnet/ACASXU_run2a_'\
-                        +str(i)+'_'+str(j)+'_batch_2000.nnet 0 2>&1 | tee logs/logs_reluval/results_p'+str(p)+'_n'+str(i)+str(j)+'.txt \n'
+                        +str(i)+'_'+str(j)+'_batch_2000.nnet 0 2>&1 | tee ' + path_logs + 'logs_reluval/results_p'+str(p)+'_n'+str(i)+str(j)+'.txt \n'
             lines = lines + line_temp
 
     f.write(lines)
@@ -53,8 +53,10 @@ def create_bash(p):
     
     if is_codeocean():
         path_nnv = "/code/"
+        path_logs = "/results/logs/"
     else:
         path_nnv = "$(pwd)/nnv/code/"
+        path_logs = "logs/"
 
     # nnv star
     filename = 'run_nnv_star.sh'
