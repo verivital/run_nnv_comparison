@@ -8,6 +8,13 @@ def is_codeocean():
         return False
 
 def create_bash(p):
+    if is_codeocean():
+        path_nnv = "/code/"
+        path_logs = "/results/logs/"
+    else:
+        path_nnv = "$(pwd)/nnv/code/"
+        path_logs = "logs/"
+
     network_n1 = 5
     network_n2 = 9
     # Marabou
@@ -50,13 +57,6 @@ def create_bash(p):
 
     f.write(lines)
     f.close()
-    
-    if is_codeocean():
-        path_nnv = "/code/"
-        path_logs = "/results/logs/"
-    else:
-        path_nnv = "$(pwd)/nnv/code/"
-        path_logs = "logs/"
 
     # nnv star
     filename = 'run_nnv_star.sh'
