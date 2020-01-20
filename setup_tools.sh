@@ -48,11 +48,12 @@ cmake --build .
 cd ..
 cd ..
 
-#echo "Install NNV"
-#git clone https://github.com/verivital/nnv.git
-#matlab -nodisplay -nodesktop -r "run nnv/code/nnv/install.m; quit"
+DIRECTORY=/codeocean-tools
 
-
-
-
-
+if [ -d "$DIRECTORY" ]; then
+    echo "Assuming CodeOcean execution environment, do not clone NNV, already set up at /code"
+else
+    echo "Install NNV"
+    git clone https://github.com/verivital/nnv.git
+    matlab -nodisplay -nodesktop -r "run nnv/code/nnv/install.m; quit"
+fi

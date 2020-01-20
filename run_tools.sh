@@ -1,13 +1,23 @@
 #/bin/bash
 
-mkdir -p logs/logs_nnv_star
-mkdir -p logs/logs_nnv_star_appr
-mkdir -p logs/logs_nnv_abs
-mkdir -p logs/logs_nnv_zono
-mkdir -p logs/logs_dnc
-mkdir -p logs/logs_mara
-mkdir -p logs/logs_reluval
+DIRECTORY=/codeocean-tools
 
+if [ -d "$DIRECTORY" ]; then
+	OUTPUT_PREFIX=/results/
+else
+	OUTPUT_PREFIX=./
+fi
+
+mkdir -p $OUTPUT_PREFIX/logs/logs_dnc
+mkdir -p $OUTPUT_PREFIX/logs/logs_mara
+mkdir -p $OUTPUT_PREFIX/logs/logs_reluval
+
+mkdir -p $OUTPUT_PREFIX/logs/logs_nnv_star
+mkdir -p $OUTPUT_PREFIX/logs/logs_nnv_star_appr
+mkdir -p $OUTPUT_PREFIX/logs/logs_nnv_abs
+mkdir -p $OUTPUT_PREFIX/logs/logs_nnv_zono
+
+# 4 acas-xu properties
 p_num=4
 i=1
 while [ $i -le $p_num ]
@@ -41,10 +51,3 @@ done
 
 python3 scripts/write_latex_table.py
 echo "All done!"
-
-
-
-
-
-
-

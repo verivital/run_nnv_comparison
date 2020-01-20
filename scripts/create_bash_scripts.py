@@ -1,4 +1,11 @@
 import numpy as np
+import os
+
+def is_codeocean():
+    if os.path.isdir("/codeocean-tools"):
+        return True
+    else:
+        return False
 
 def create_bash(p):
     network_n1 = 5
@@ -43,17 +50,22 @@ def create_bash(p):
 
     f.write(lines)
     f.close()
+    
+    if is_codeocean():
+        path_nnv = "/code/"
+    else:
+        path_nnv = "$(pwd)/nnv/code/"
 
     # nnv star
     filename = 'run_nnv_star.sh'
     f = open(filename, 'w')
-    lines = '#!/bin/bash\n\nTIMEOUT=10m \n\ntimeout --foreground --signal=SIGQUIT $TIMEOUT matlab -nodisplay -nodesktop -r \'run $(pwd)/nnv/code/nnv/examples/Submission/CAV2020/' \
+    lines = '#!/bin/bash\n\nTIMEOUT=10m \n\ntimeout --foreground --signal=SIGQUIT $TIMEOUT matlab -nodisplay -nodesktop -r \'run " + path_nnv + "nnv/examples/Submission/CAV2020/' \
             'verify_P0_N00_star('+str(1)+','+str(1)+');clear;'
     for i in range(1,network_n1+1):
         for j in range(1,network_n2+1):
             if i==1 and j==1:
                 continue
-            line_temp = 'run $(pwd)/nnv/code/nnv/examples/Submission/CAV2020/verify_P0_N00_star('+str(i)+','+str(j)+');clear;'
+            line_temp = 'run ' + path_nnv + 'nnv/examples/Submission/CAV2020/verify_P0_N00_star('+str(i)+','+str(j)+');clear;'
             lines = lines + line_temp
 
     lines = lines + 'quit\''
@@ -63,13 +75,13 @@ def create_bash(p):
     # nnv abs
     filename = 'run_nnv_abs.sh'
     f = open(filename, 'w')
-    lines = '#!/bin/bash\n\nTIMEOUT=10m \n\ntimeout --foreground --signal=SIGQUIT $TIMEOUT matlab -nodisplay -nodesktop -r \'run $(pwd)/nnv/code/nnv/examples/Submission/CAV2020/' \
+    lines = '#!/bin/bash\n\nTIMEOUT=10m \n\ntimeout --foreground --signal=SIGQUIT $TIMEOUT matlab -nodisplay -nodesktop -r \'run ' + path_nnv + 'nnv/examples/Submission/CAV2020/' \
             'verify_P0_N00_abs(' + str(1) + ',' + str(1) + ');clear;'
     for i in range(1,network_n1+1):
         for j in range(1,network_n2+1):
             if i == 1 and j == 1:
                 continue
-            line_temp = 'run $(pwd)/nnv/code/nnv/examples/Submission/CAV2020/verify_P0_N00_abs('+str(i)+','+str(j)+');clear;'
+            line_temp = 'run ' + path_nnv + 'nnv/examples/Submission/CAV2020/verify_P0_N00_abs('+str(i)+','+str(j)+');clear;'
             lines = lines + line_temp
 
     lines = lines + 'quit\''
@@ -79,13 +91,13 @@ def create_bash(p):
     # nnv star appr
     filename = 'run_nnv_star_appr.sh'
     f = open(filename, 'w')
-    lines = '#!/bin/bash\n\nTIMEOUT=10m \n\ntimeout --foreground --signal=SIGQUIT $TIMEOUT matlab -nodisplay -nodesktop -r \'run $(pwd)/nnv/code/nnv/examples/Submission/CAV2020/' \
+    lines = '#!/bin/bash\n\nTIMEOUT=10m \n\ntimeout --foreground --signal=SIGQUIT $TIMEOUT matlab -nodisplay -nodesktop -r \'run ' + path_nnv + 'nnv/code/nnv/examples/Submission/CAV2020/' \
             'verify_P0_N00_star_appr('+str(1)+','+str(1)+');clear;'
     for i in range(1,network_n1+1):
         for j in range(1,network_n2+1):
             if i == 1 and j == 1:
                 continue
-            line_temp = 'run $(pwd)/nnv/code/nnv/examples/Submission/CAV2020/verify_P0_N00_star_appr(' + str(i) + ',' + str(j) + ');clear;'
+            line_temp = 'run ' + path_nnv + 'nnv/examples/Submission/CAV2020/verify_P0_N00_star_appr(' + str(i) + ',' + str(j) + ');clear;'
             lines = lines + line_temp
 
     lines = lines + 'quit\''
@@ -96,13 +108,13 @@ def create_bash(p):
     # nnv star zono
     filename = 'run_nnv_zono.sh'
     f = open(filename, 'w')
-    lines = '#!/bin/bash\n\nTIMEOUT=10m \n\ntimeout --foreground --signal=SIGQUIT $TIMEOUT matlab -nodisplay -nodesktop -r \'run $(pwd)/nnv/code/nnv/examples/Submission/CAV2020/' \
+    lines = '#!/bin/bash\n\nTIMEOUT=10m \n\ntimeout --foreground --signal=SIGQUIT $TIMEOUT matlab -nodisplay -nodesktop -r \'run ' + path_nnv + 'nnv/examples/Submission/CAV2020/' \
             'verify_P0_N00_zono('+str(1)+','+str(1)+');clear;'
     for i in range(1,network_n1+1):
         for j in range(1,network_n2+1):
             if i == 1 and j == 1:
                 continue
-            line_temp = 'run $(pwd)/nnv/code/nnv/examples/Submission/CAV2020/verify_P0_N00_zono(' + str(i) + ',' + str(j) + ');clear;'
+            line_temp = 'run ' + path_nnv + 'nnv/examples/Submission/CAV2020/verify_P0_N00_zono(' + str(i) + ',' + str(j) + ');clear;'
             lines = lines + line_temp
 
     lines = lines + 'quit\''

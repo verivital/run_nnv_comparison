@@ -34,14 +34,11 @@ elif property == 4:
 else:
     print('This property is not defined!')
 
-
 mean = [1.9791091e+04,0.0,0.0,650.0,600.0,7.5188840201005975]
 std = [60261.0,6.28318530718,6.28318530718,1100.0,1200.0,373.94992]
 
-    # edit the input range of the selected property
+# edit the input range of the selected property
 wp.write_property(property, x, y, mean, std)
 
 # generate bash scripts to run comparison
 cs.create_bash(property)
-
-

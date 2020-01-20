@@ -1,13 +1,24 @@
+import os
 
+def is_codeocean():
+    if os.path.isdir("/codeocean-tools"):
+        return True
+    else:
+        return False
 
-#file path
-file_mara = 'logs/logs_mara/results_p'
-file_dnc = 'logs/logs_dnc/results_p'
-file_reluval = 'logs/logs_reluval/results_p'
-file_nnv_star = 'logs/logs_nnv_star/P'
-file_nnv_star_appr = 'logs/logs_nnv_star_appr/P'
-file_nnv_abs = 'logs/logs_nnv_abs/P'
-file_nnv_zono = 'logs/logs_nnv_zono/P'
+#file paths
+if is_codeocean():
+    output_prefix = "/results/logs/"
+else:
+    output_prefix = "logs/"
+
+file_mara = output_prefix + 'logs_mara/results_p'
+file_dnc = output_prefix + 'logs_dnc/results_p'
+file_reluval = output_prefix + 'logs_reluval/results_p'
+file_nnv_star = output_prefix + 'logs_nnv_star/P'
+file_nnv_star_appr = output_prefix + 'logs_nnv_star_appr/P'
+file_nnv_abs = output_prefix + 'logs_nnv_abs/P'
+file_nnv_zono = output_prefix + 'logs_nnv_zono/P'
 
 
 
