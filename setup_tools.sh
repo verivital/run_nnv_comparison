@@ -1,6 +1,8 @@
 #/bin/bash
 
-DIRECTORY=/codeocean-tools
+# unfortunately, this directory only exists when running the web-based terminal
+# so, we will create a directory with the codeocean Dockerfile
+DIRECTORY=/codeocean-true
 
 ls
 ls /

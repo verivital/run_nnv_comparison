@@ -2,7 +2,7 @@ import numpy as np
 import os
 
 def is_codeocean():
-    if os.path.isdir("/codeocean-tools"):
+    if os.path.isdir("/codeocean-true"):
         return True
     else:
         return False
