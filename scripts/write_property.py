@@ -1,7 +1,7 @@
 import numpy as np
 import copy as cp
 import os
-import batch_config
+import batch_config as cfg
 
 def write_property_marabou(p, x, y, mean, std):
     x_temp = (np.array(x).transpose()-np.array([mean[:-1]]).transpose())/np.array([std[:-1]]).transpose()
@@ -72,8 +72,7 @@ def write_property_reluval(p,x):
     f.close()
 
 def write_property_nnv_star(p,x,y):
-    global path_nnv
-    filename = path_nnv + 'nnv/examples/Submission/CAV2020/verify_P0_N00_star.m'
+    filename = cfg.path_nnv + 'nnv/examples/Submission/CAV2020/verify_P0_N00_star.m'
     f = open(filename, 'r')
     contents = f.readlines()
     f.close()
@@ -122,8 +121,7 @@ def write_property_nnv_star(p,x,y):
     f.close()
 
 def write_property_nnv_abs(p,x,y):
-    global path_nnv
-    filename = path_nnv + 'nnv/examples/Submission/CAV2020/verify_P0_N00_abs.m'
+    filename = cfg.path_nnv + 'nnv/examples/Submission/CAV2020/verify_P0_N00_abs.m'
     f = open(filename, 'r')
     contents = f.readlines()
     f.close()
@@ -173,8 +171,7 @@ def write_property_nnv_abs(p,x,y):
 
 
 def write_property_nnv_star_appr(p,x,y):
-    global path_nnv
-    filename = path_nnv + 'nnv/examples/Submission/CAV2020/verify_P0_N00_star_appr.m'
+    filename = cfg.path_nnv + 'nnv/examples/Submission/CAV2020/verify_P0_N00_star_appr.m'
     f = open(filename, 'r')
     contents = f.readlines()
     f.close()
@@ -223,8 +220,7 @@ def write_property_nnv_star_appr(p,x,y):
     f.close()
 
 def write_property_nnv_zono(p,x,y):
-    global path_nnv
-    filename = path_nnv + 'nnv/examples/Submission/CAV2020/verify_P0_N00_zono.m'
+    filename = cfg.path_nnv + 'nnv/examples/Submission/CAV2020/verify_P0_N00_zono.m'
     f = open(filename, 'r')
     contents = f.readlines()
     f.close()

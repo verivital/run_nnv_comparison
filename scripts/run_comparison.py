@@ -3,7 +3,7 @@ import sys
 import os
 import write_property as wp
 import create_bash_scripts as cs
-import batch_config
+import batch_config as cfg
 
 property = int(sys.argv[1])
 

@@ -1,13 +1,13 @@
 import os
-import batch_config
+import batch_config as cfg
 
-file_mara = path_logs + 'logs_mara/results_p'
-file_dnc = path_logs + 'logs_dnc/results_p'
-file_reluval = path_logs + 'logs_reluval/results_p'
-file_nnv_star = path_logs + 'logs_nnv_star/P'
-file_nnv_star_appr = path_logs + 'logs_nnv_star_appr/P'
-file_nnv_abs = path_logs + 'logs_nnv_abs/P'
-file_nnv_zono = path_logs + 'logs_nnv_zono/P'
+file_mara = cfg.path_logs + 'logs_mara/results_p'
+file_dnc = cfg.path_logs + 'logs_dnc/results_p'
+file_reluval = cfg.path_logs + 'logs_reluval/results_p'
+file_nnv_star = cfg.path_logs + 'logs_nnv_star/P'
+file_nnv_star_appr = cfg.path_logs + 'logs_nnv_star_appr/P'
+file_nnv_abs = cfg.path_logs + 'logs_nnv_abs/P'
+file_nnv_zono = cfg.path_logs + 'logs_nnv_zono/P'
 
 def get_data_mara(mara):
     f = open(mara, 'r')
