@@ -3,7 +3,7 @@ import os
 import batch_config
 
 def create_bash(p):
-    global path_logs path_nnv_abs
+    global path_logs, path_nnv_abs
     network_n1 = 5
     network_n2 = 9
     # Marabou
