@@ -49,7 +49,7 @@ def create_bash(p):
     # nnv star
     filename = 'run_nnv_star.sh'
     f = open(filename, 'w')
-    lines = '#!/bin/bash\n\nTIMEOUT=10m \n\ntimeout --foreground --signal=SIGQUIT $TIMEOUT matlab -nodisplay -nodesktop -r \'run " + cfg.path_nnv_abs + "nnv/examples/Submission/CAV2020/' \
+    lines = '#!/bin/bash\n\nTIMEOUT=10m \n\ntimeout --foreground --signal=SIGQUIT $TIMEOUT matlab -nodisplay -nodesktop -r \'run ' + cfg.path_nnv_abs + 'nnv/examples/Submission/CAV2020/' \
             'verify_P0_N00_star('+str(1)+','+str(1)+');clear;'
     for i in range(1,network_n1+1):
         for j in range(1,network_n2+1):
