@@ -84,13 +84,9 @@ def get_data_reluval(reluval):
 
 
 def get_data_nnv(nnv):
-    try:
-        f = open(nnv, 'r')
-        contents = f.readlines()
-    except:
-        print("error parsing nnv results")
-    finally:
-        f.close()
+    f = open(nnv, 'r')
+    contents = f.readlines()
+    f.close()
     result = contents[0][:-1]
     num = contents[1][23:-1]
     value = contents[2][12:-1]
@@ -140,7 +136,7 @@ for p in range(1,property_num+1):
 
 
     str_temp = str_temp + '\\hline\n\\end{tabular}\n\\end{adjustbox}\n\\end{table}'
-    filename = 'table_property'+str(p)+'.tex'
+    filename = cfg.path_logs + 'table_property'+str(p)+'.tex'
     f = open(filename, 'w')
     f.write(str_temp)
     f.close()
