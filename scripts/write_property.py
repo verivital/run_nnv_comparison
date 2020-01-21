@@ -2,16 +2,7 @@ import numpy as np
 import  copy as cp
 import os
 
-def is_codeocean():
-    if os.path.isdir("/codeocean-true"):
-        return True
-    else:
-        return False
 
-if is_codeocean():
-    path_nnv = "/code/"
-else:
-    path_nnv = "../nnv/code/"
 
 
 def write_property_marabou(p, x, y, mean, std):

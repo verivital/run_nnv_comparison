@@ -1,16 +1,5 @@
 import os
-
-def is_codeocean():
-    if os.path.isdir("/codeocean-true"):
-        return True
-    else:
-        return False
-
-#file paths
-if is_codeocean():
-    output_prefix = "/results/logs/"
-else:
-    output_prefix = "logs/"
+import batch_config
 
 file_mara = output_prefix + 'logs_mara/results_p'
 file_dnc = output_prefix + 'logs_dnc/results_p'

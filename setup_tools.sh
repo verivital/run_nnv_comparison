@@ -1,6 +1,6 @@
 #/bin/bash
 
-# unfortunately, this directory only exists when running the web-based terminal
+# unfortunately, the directory /codeocean-tools only exists when running the web-based terminal
 # so, we will create a directory with the codeocean Dockerfile
 DIRECTORY=/codeocean-true
 
@@ -15,6 +15,8 @@ else
     matlab -nodisplay -nodesktop -r "run nnv/code/nnv/install.m; quit"
 fi
 
+# debugging, skipping other tool installation as they take forever
+# exit 1
 
 echo "Install ReluVal"
 git clone https://github.com/tcwangshiqi-columbia/ReluVal
