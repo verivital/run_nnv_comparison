@@ -1,6 +1,6 @@
 #/bin/bash
 
-DIRECTORY=/codeocean-tools
+DIRECTORY=/codeocean-true
 
 if [ -d "$DIRECTORY" ]; then
 	OUTPUT_PREFIX=/results/
