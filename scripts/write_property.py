@@ -24,14 +24,14 @@ def write_property_marabou(p, x, y, mean, std):
                 if e[i]==1:
                     str_temp = str_temp + '+y' + str(i)
                 elif e[i]==-1:
-                    str_temp = str_temp + '-y' + str(i)
+                    str_temp = str_temp + ' -y' + str(i)
 
             str_temp = str_temp + ' <= ' + str(e[-1]) + '\n'
             afile.write(str_temp)
         elif e[0] == -1:
             for i in range(len(e)-1):
                 if e[i]==1:
-                    str_temp = str_temp + '-y' + str(i)
+                    str_temp = str_temp + ' -y' + str(i)
                 elif e[i]==-1:
                     str_temp = str_temp + '+y' + str(i)
 
