@@ -10,6 +10,7 @@ file_nnv_star = cfg.path_logs + 'logs_nnv_star/P'
 file_nnv_star_appr = cfg.path_logs + 'logs_nnv_star_appr/P'
 file_nnv_abs = cfg.path_logs + 'logs_nnv_abs/P'
 file_nnv_zono = cfg.path_logs + 'logs_nnv_zono/P'
+
 # check if a program exists on path (for matlab here)
 def is_tool(name):
     try:
@@ -105,7 +106,10 @@ def get_data_reluval(reluval):
 
 
 def get_data_nnv(nnv):
-    if is_tool('matlab -nodisplay -nodesktop -r'):
+# TODO: matlab detection with the following not quite right, need to not launch the gui, so probably need to modify to pass in command arguments
+# otherwise we can get a stall here as matlab launches the GUI
+#    if is_tool('matlab -nodisplay -nodesktop -r'):
+    try:
         f = open(nnv, 'r')
         contents = f.readlines()
         f.close()
@@ -113,8 +117,9 @@ def get_data_nnv(nnv):
         num = contents[1][23:-1]
         value = contents[2][12:-1]
         return num, value, result
-    else:
-        print("WARNING: nnv not run, so table results invalid for it")
+    except:
+#        print("WARNING: nnv not run, so table results invalid for it")
+        print("ERROR: problem parsing nnv results")
         return '0', '0', 'ERR'
 
 
