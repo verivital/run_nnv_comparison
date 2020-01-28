@@ -8,11 +8,11 @@ if [ -d "$DIRECTORY" ]; then
     echo "Assuming CodeOcean execution environment, do not clone NNV, already set up at /code"
 else
     if command -v matlab 2>/dev/null; then
-        echo "Matlab not detected, skipping NNV"
-    else
         echo "Install NNV"
         git clone https://github.com/verivital/nnv.git
         matlab -nodisplay -nodesktop -r "run nnv/code/nnv/install.m; savepath; quit"
+    else
+        echo "Matlab not detected, skipping NNV"
     fi
 fi
 
