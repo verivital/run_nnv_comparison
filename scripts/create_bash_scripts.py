@@ -8,7 +8,7 @@ def create_bash(p):
     # Marabou
     filename = 'run_marabou.sh'
     f = open(filename, 'w')
-    lines = '#!/bin/bash\n\nTIMEOUT=60s \n\n'
+    lines = '#!/bin/bash\n\nTIMEOUT=10h \n\n'
     for i in range(1,network_n1+1):
         for j in range(1,network_n2+1):
             line_temp = 'timeout --foreground --signal=SIGQUIT $TIMEOUT ./Marabou/build/Marabou Marabou/resources/nnet/acasxu/ACASXU_experimental_v2a_'\
@@ -21,7 +21,7 @@ def create_bash(p):
     # Marabou dnc
     filename = 'run_marabou_dnc.sh'
     f = open(filename, 'w')
-    lines = '#!/bin/bash\n\nTIMEOUT=60s \n\n'
+    lines = '#!/bin/bash\n\nTIMEOUT=10h \n\n'
     for i in range(1,network_n1+1):
         for j in range(1,network_n2+1):
             line_temp = 'timeout --foreground --signal=SIGQUIT $TIMEOUT ./Marabou/build/Marabou Marabou/resources/nnet/acasxu/ACASXU_experimental_v2a_'\
@@ -36,7 +36,7 @@ def create_bash(p):
     # reluval
     filename = 'run_reluval.sh'
     f = open(filename, 'w')
-    lines = '#!/bin/bash\n\nTIMEOUT=60s \n\n'
+    lines = '#!/bin/bash\n\nTIMEOUT=10h \n\n'
     for i in range(1,network_n1+1):
         for j in range(1,network_n2+1):
             line_temp = 'timeout --foreground --signal=SIGQUIT $TIMEOUT ./ReluVal/network_test '+str(p)+' ./ReluVal/nnet/ACASXU_run2a_'\
