@@ -1,6 +1,7 @@
 import os
 import numpy as np
 import batch_config as cfg
+import subprocess
 
 file_mara = cfg.path_logs + 'logs_mara/results_p'
 file_dnc = cfg.path_logs + 'logs_dnc/results_p'
@@ -9,90 +10,112 @@ file_nnv_star = cfg.path_logs + 'logs_nnv_star/P'
 file_nnv_star_appr = cfg.path_logs + 'logs_nnv_star_appr/P'
 file_nnv_abs = cfg.path_logs + 'logs_nnv_abs/P'
 file_nnv_zono = cfg.path_logs + 'logs_nnv_zono/P'
+# check if a program exists on path (for matlab here)
+def is_tool(name):
+    try:
+        devnull = open(os.devnull)
+        subprocess.Popen([name], stdout=devnull, stderr=devnull).communicate()
+    except OSError as e:
+        if e.errno == os.errno.ENOENT:
+            return False
+    return True
 
 def get_data_mara(mara):
-    f = open(mara, 'r')
-    contents = f.readlines()
-    f.close()
-    result=''
     try:
-        idx = len(contents) - 1 - contents[::-1].index('\t--- Time Statistics ---\n')
-        i0= 21
-        value = ''
-        for n in range(i0, len(contents[idx + 1])):
-            if contents[idx + 1][n] == 'm':
-                break
-            else:
-                value = value+contents[idx + 1][n]
+        f = open(mara, 'r')
+        contents = f.readlines()
+        f.close()
+        result=''
+        try:
+            idx = len(contents) - 1 - contents[::-1].index('\t--- Time Statistics ---\n')
+            i0= 21
+            value = ''
+            for n in range(i0, len(contents[idx + 1])):
+                if contents[idx + 1][n] == 'm':
+                    break
+                else:
+                    value = value+contents[idx + 1][n]
 
-        value = str(int(value)/1000)
+            value = str(int(value)/1000)
+        except:
+            value = '0.0'
+
+        if 'SAT\n' in contents:
+            result = 'SAT'
+        elif 'UNSAT\n' in contents:
+            result = 'UNSAT'
+        else:
+            result = 'UNKOWN'
+
+        return value, result
     except:
-        value = '0.0'
-
-    if 'SAT\n' in contents:
-        result = 'SAT'
-    elif 'UNSAT\n' in contents:
-        result = 'UNSAT'
-    else:
-        result = 'UNKOWN'
-
-    return value, result
-
+        print("ERROR: marabou parse failure")
+        return '0', 'ERR'
 
 def get_data_dnc(dnc):
-    f = open(dnc, 'r')
-    contents = f.readlines()
-    f.close()
-    value =''
-    result=''
-    for e in contents[::-1]:
-        if e[:11]=='Total Time:':
-            value = e[11:-1]
-            break
-    if value=='':
-        value = '0'
+    try:
+        f = open(dnc, 'r')
+        contents = f.readlines()
+        f.close()
+        value =''
+        result=''
+        for e in contents[::-1]:
+            if e[:11]=='Total Time:':
+                value = e[11:-1]
+                break
+        if value=='':
+            value = '0'
 
-    if ('DnCManager::solve SAT query\n' in contents) or ('SAT\n' in contents):
-        result = 'SAT'
-    elif ('DnCManager::solve UNSAT query\n' in contents) or ('UNSAT\n' in contents):
-        result = 'UNSAT'
-    else:
-        result = 'UNKNOWN'
+        if ('DnCManager::solve SAT query\n' in contents) or ('SAT\n' in contents):
+            result = 'SAT'
+        elif ('DnCManager::solve UNSAT query\n' in contents) or ('UNSAT\n' in contents):
+            result = 'UNSAT'
+        else:
+            result = 'UNKNOWN'
 
-    return value, result
-
+        return value, result
+    except:
+        print("ERROR: marabou dnc result parse failure")
+        return '0', 'ERR'
 
 def get_data_reluval(reluval):
-    f = open(reluval, 'r')
-    contents = f.readlines()
-    f.close()
-    result =''
-    if 'adv found:\n' in contents:
-        result = 'SAT'
-    elif 'No adv!\n' in contents:
-        result = 'UNSAT'
-    else:
-        result = 'UNKNOWN'
+    try:
+        f = open(reluval, 'r')
+        contents = f.readlines()
+        f.close()
+        result =''
+        if 'adv found:\n' in contents:
+            result = 'SAT'
+        elif 'No adv!\n' in contents:
+            result = 'UNSAT'
+        else:
+            result = 'UNKNOWN'
 
-    value = ''
-    for e in contents[::-1]:
-        xx = e[:5]
-        if e[:5]=='time:':
-            value = e[6:-1]
-            break
+        value = ''
+        for e in contents[::-1]:
+            xx = e[:5]
+            if e[:5]=='time:':
+                value = e[6:-1]
+                break
 
-    return value, result
+        return value, result
+    except:
+        print("ERROR: reluval result parse failure")
+        return '0', 'ERR'
 
 
 def get_data_nnv(nnv):
-    f = open(nnv, 'r')
-    contents = f.readlines()
-    f.close()
-    result = contents[0][:-1]
-    num = contents[1][23:-1]
-    value = contents[2][12:-1]
-
-    return num, value, result
+    if is_tool('matlab'):
+        f = open(nnv, 'r')
+        contents = f.readlines()
+        f.close()
+        result = contents[0][:-1]
+        num = contents[1][23:-1]
+        value = contents[2][12:-1]
+        return num, value, result
+    else:
+        print("WARNING: nnv not run, so table results invalid for it")
+        return '0', '0', 'ERR'
 
 
 
