@@ -46,7 +46,7 @@ def get_data_mara(mara):
         elif 'UNSAT\n' in contents:
             result = 'UNSAT'
         else:
-            result = 'UNKOWN'
+            result = 'TIMEOUT'
 
         return value, result
     except:
@@ -72,7 +72,7 @@ def get_data_dnc(dnc):
         elif ('DnCManager::solve UNSAT query\n' in contents) or ('UNSAT\n' in contents):
             result = 'UNSAT'
         else:
-            result = 'UNKNOWN'
+            result = 'TIMEOUT'
 
         return value, result
     except:
@@ -90,7 +90,7 @@ def get_data_reluval(reluval):
         elif 'No adv!\n' in contents:
             result = 'UNSAT'
         else:
-            result = 'UNKNOWN'
+            result = 'TIMEOUT'
 
         value = ''
         for e in contents[::-1]:
