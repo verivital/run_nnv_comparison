@@ -105,7 +105,7 @@ def get_data_reluval(reluval):
 
 
 def get_data_nnv(nnv):
-    if is_tool('matlab'):
+    if is_tool('matlab -nodisplay -nodesktop -r'):
         f = open(nnv, 'r')
         contents = f.readlines()
         f.close()
