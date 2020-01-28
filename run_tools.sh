@@ -35,10 +35,16 @@ do
     ./scripts/run_reluval.sh
     ./scripts/run_marabou.sh
     ./scripts/run_marabou_dnc.sh
-    ./scripts/run_nnv_star.sh
-    ./scripts/run_nnv_star_appr.sh
-    ./scripts/run_nnv_abs.sh
-    ./scripts/run_nnv_zono.sh
+    
+    if command -v matlab 2>/dev/null; then
+        ./scripts/run_nnv_star.sh
+        ./scripts/run_nnv_star_appr.sh
+        ./scripts/run_nnv_abs.sh
+        ./scripts/run_nnv_zono.sh
+    else
+        echo "Matlab not detected, skipping NNV"
+    fi    
+    
     rm -f scripts/run_reluval.sh
     rm -f scripts/run_marabou.sh
     rm -f scripts/run_marabou_dnc.sh
