@@ -1,5 +1,7 @@
 import os
 
+# detect if platform is codeocean based 
+# on existence of root directory
 def is_codeocean():
     if os.path.isdir("/codeocean-true"):
         return True

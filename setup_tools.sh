@@ -1,21 +1,22 @@
 #/bin/bash
 
 # unfortunately, the directory /codeocean-tools only exists when running the web-based terminal
-# so, we will create a directory with the codeocean Dockerfile
+# so, we create a directory from the codeocean Dockerfile
 DIRECTORY=/codeocean-true
-
-ls
-ls /
 
 if [ -d "$DIRECTORY" ]; then
     echo "Assuming CodeOcean execution environment, do not clone NNV, already set up at /code"
 else
-    echo "Install NNV"
-    git clone https://github.com/verivital/nnv.git
-    matlab -nodisplay -nodesktop -r "run nnv/code/nnv/install.m; quit"
+    if command -v matlab 2>/dev/null; then
+        echo "Matlab not detected, skipping NNV"
+    else
+        echo "Install NNV"
+        git clone https://github.com/verivital/nnv.git
+        matlab -nodisplay -nodesktop -r "run nnv/code/nnv/install.m; savepath; quit"
+    fi
 fi
 
-# debugging, skipping other tool installation as they take forever
+# debugging, skip other tool installation as they take forever
 # exit 1
 
 echo "Install ReluVal"
