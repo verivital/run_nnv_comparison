@@ -9,8 +9,8 @@ property = int(sys.argv[1])
 
 # select runtime based on considering 
 # subsets of the property sizes
-#property_size = 0 # full ranges (slowest: days of runtime)
-property_size = 1 # medium ranges
+property_size = 0 # full ranges (slowest: days of runtime)
+#property_size = 1 # medium ranges
 #property_size = 2 # small ranges (fast: seconds for most)
 
 if property == 1:

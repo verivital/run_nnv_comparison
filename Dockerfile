@@ -46,4 +46,6 @@ RUN apt-get install nano
 RUN ls
 RUN ls
 RUN ls
+RUN ls
+RUN ls
 RUN git pull
