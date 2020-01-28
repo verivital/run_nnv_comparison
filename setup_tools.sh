@@ -1,7 +1,8 @@
 #/bin/bash
 
 # unfortunately, the directory /codeocean-tools only exists when running the web-based terminal
-# so, we create a directory from the codeocean Dockerfile
+# so, we create a directory from the codeocean Dockerfile and check 
+# if it exists to determine if this is executing on codeocean or not
 DIRECTORY=/codeocean-true
 
 if [ -d "$DIRECTORY" ]; then
@@ -9,7 +10,8 @@ if [ -d "$DIRECTORY" ]; then
 else
     if command -v matlab 2>/dev/null; then
         echo "Install NNV"
-        git clone https://github.com/verivital/nnv.git
+        # note: recursive is needed to pull in submodules (CORA, Hyst, NNMT)
+        git clone --recursive https://github.com/verivital/nnv.git
         matlab -nodisplay -nodesktop -r "run nnv/code/nnv/install.m; savepath; quit"
     else
         echo "Matlab not detected, skipping NNV"

@@ -49,4 +49,5 @@ RUN ls
 RUN ls
 RUN ls
 RUN ls
+RUN ls
 RUN git pull

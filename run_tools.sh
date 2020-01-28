@@ -2,11 +2,19 @@
 
 DIRECTORY=/codeocean-true
 
+# if on codeocean, results must go to /results during a 
+# run, otherwise they do not get saved
 if [ -d "$DIRECTORY" ]; then
 	OUTPUT_PREFIX=/results/
+# otherwise, use the current directory
 else
 	OUTPUT_PREFIX=./
 fi
+
+# run nnv-only closed-loop CPS examples
+if ![ -d "$DIRECTORY" ]; then
+    matlab -nodisplay -nodesktop -r 'run $(pwd)/nnv/code/nnv/examples/Submission/CAV2020_Tool/ACC/reproduce.m'
+end
 
 mkdir -p $OUTPUT_PREFIX/logs/logs_dnc
 mkdir -p $OUTPUT_PREFIX/logs/logs_mara
@@ -20,9 +28,13 @@ mkdir -p $OUTPUT_PREFIX/logs/logs_nnv_zono
 # 4 acas-xu properties
 p_num=4
 i=1
+
+# iterate over the acas-xu properties
 while [ $i -le $p_num ]
 do
     cd scripts
+    # generate shell scripts to call tools 
+    # for each property i
     python3 run_comparison.py $i
     chmod +x run_reluval.sh
     chmod +x run_marabou.sh
@@ -36,6 +48,7 @@ do
     ./scripts/run_marabou.sh
     ./scripts/run_marabou_dnc.sh
     
+    # skip running nnv if matlab is not installed
     if command -v matlab 2>/dev/null; then
         ./scripts/run_nnv_star.sh
         ./scripts/run_nnv_star_appr.sh
@@ -56,4 +69,5 @@ do
 done
 
 python3 scripts/write_latex_table.py
-echo "All done!"
+echo "All done with ACAS-Xu comparisons!"
+
