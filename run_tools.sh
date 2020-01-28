@@ -11,11 +11,6 @@ else
 	OUTPUT_PREFIX=./
 fi
 
-# run nnv-only closed-loop CPS examples
-if ![ -d "$DIRECTORY" ]; then
-    matlab -nodisplay -nodesktop -r 'run $(pwd)/nnv/code/nnv/examples/Submission/CAV2020_Tool/ACC/reproduce.m'
-end
-
 mkdir -p $OUTPUT_PREFIX/logs/logs_dnc
 mkdir -p $OUTPUT_PREFIX/logs/logs_mara
 mkdir -p $OUTPUT_PREFIX/logs/logs_reluval
@@ -71,3 +66,9 @@ done
 python3 scripts/write_latex_table.py
 echo "All done with ACAS-Xu comparisons!"
 
+echo "Starting closed-loop CPS examples in NNV"
+# run nnv-only closed-loop CPS examples
+# do not do this on codeocean, as it is executed in a different manner (from run_codeocean.m)
+if ! [ -d "$DIRECTORY" ]; then
+    matlab -nodisplay -nodesktop -r 'run $(pwd)/nnv/code/nnv/examples/Submission/CAV2020/ACC/reproduce.m; quit;'
+fi
