@@ -167,19 +167,25 @@ for p in range(1,property_num+1):
             nnv_zono = file_nnv_zono + str(p) + '_N' + str(n1) + str(n2) + '_zono.txt'
 
             num, value, result = get_data_nnv(nnv_zono)
-            str_temp = str_temp + '$N_{'+str(n1)+str(n2)+'}$&'+value + '&' + result +'&'
+            if result == 'UNKNOWN':
+                result = 'UNK'
+            str_temp = str_temp + '$N_{'+str(n1)+str(n2)+'}$&'+'\cellcolor[HTML]{C7F7C7}'+value + '&' + result +'&'
             num, value, result = get_data_nnv(nnv_abs)
-            str_temp = str_temp + value + '&' + result + '&'
+            if result == 'UNKNOWN':
+                result = 'UNK'
+            str_temp = str_temp + '\cellcolor[HTML]{C7F7C7}'+ value + '&' + result + '&'
             value, result = get_data_mara(mara)
-            str_temp = str_temp + value + '&' + result + '&'
+            str_temp = str_temp + '\cellcolor[HTML]{C7F7C7}'+ value + '&' + result + '&'
             value, result = get_data_dnc(dnc)
-            str_temp = str_temp + value + '&' + result + '&'
+            str_temp = str_temp + '\cellcolor[HTML]{C7F7C7}'+ value + '&' + result + '&'
             value, result = get_data_reluval(reluval)
-            str_temp = str_temp + value + '&' + result + '&'
+            str_temp = str_temp + '\cellcolor[HTML]{C7F7C7}'+ value + '&' + result + '&'
             num, value, result = get_data_nnv(nnv_star)
-            str_temp = str_temp + num +'&'+ value + '&' + result + '&'
+            str_temp = str_temp + '\cellcolor[HTML]{FFFFC7}'+ num +'&'+ '\cellcolor[HTML]{C7F7C7}'+ value + '&' + result + '&'
             num, value, result = get_data_nnv(nnv_star_appr)
-            str_temp = str_temp + value + '&' + result + '\\\\\n'
+            if result == 'UNKNOWN':
+                result = 'UNK'
+            str_temp = str_temp + '\cellcolor[HTML]{C7F7C7}'+ value + '&' + result + '\\\\\n'
 
 
     str_temp = str_temp + '\\hline\n\\end{tabular}\n\\end{adjustbox}\n\\end{table}'
@@ -273,6 +279,7 @@ f.close()
 
 str_temp = '\documentclass{article} \n \
 \\usepackage[utf8]{inputenc} \n \
+\\usepackage[table,xcdraw]{xcolor} \n \
 \\usepackage{adjustbox} \n \
 \\usepackage{multirow} \n \
 \\usepackage{multicol} \n \
