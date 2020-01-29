@@ -1,3 +1,6 @@
+# For full instructions, see the artifact evaulation readme:
+# https://github.com/verivital/run_nnv_comparison/blob/master/README_AE.md
+
 # The comparison runs in linux with python3 (with numpy) and matlab installed
 # Install tools (Reluplex, Marabou, ReluVal, NNV)
 chmod +x setup_tools.sh
