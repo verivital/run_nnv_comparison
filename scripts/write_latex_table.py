@@ -306,8 +306,7 @@ for p in range(1,property_num+1):
             time_appr.append(float(value))
             result_appr.append(result)
 
-    if property_size == 0:
-        str_temp = str_temp + create_str('Reluplex', time_reluplex, result_reluplex)
+    str_temp = str_temp + create_str('Reluplex', time_reluplex, result_reluplex)
     str_temp = str_temp + create_str('Marabou', time_mara, result_mara)
     str_temp = str_temp + create_str('Marabou DnC', time_dnc, result_dnc)
     str_temp = str_temp + create_str('ReluVal', time_reluval, result_reluval)
