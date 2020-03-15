@@ -6,12 +6,13 @@ import create_bash_scripts as cs
 import batch_config as cfg
 
 property = int(sys.argv[1])
+property_size = int(sys.argv[2])
 
 # select runtime based on considering 
 # subsets of the property sizes
 #property_size = 0 # full ranges (slowest: days of runtime)
 #property_size = 1 # medium ranges
-property_size = 2 # small ranges (fast: seconds for most)
+#property_size = 2 # small ranges (fast: seconds for most)
 
 if property == 1:
     if property_size == 0:
@@ -67,4 +68,4 @@ std = [60261.0,6.28318530718,6.28318530718,1100.0,1200.0,373.94992]
 wp.write_property(property, x, y, mean, std)
 
 # generate bash scripts to run comparison
-cs.create_bash(property)
+cs.create_bash(property, property_size)

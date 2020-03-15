@@ -24,7 +24,7 @@ fi
 echo "Install ReluVal"
 git clone https://github.com/tcwangshiqi-columbia/ReluVal
 mkdir -p ReluVal/OpenBLAS
-apt-get install libopenblas-base
+sudo apt-get install libopenblas-base
 wget https://github.com/xianyi/OpenBLAS/archive/v0.3.6.tar.gz
 tar -xzf v0.3.6.tar.gz
 cd OpenBLAS-0.3.6

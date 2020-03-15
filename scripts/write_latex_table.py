@@ -2,8 +2,10 @@ import os
 import numpy as np
 import batch_config as cfg
 import subprocess
+import sys
 
 file_mara = cfg.path_logs + 'logs_mara/results_p'
+file_reluplex = cfg.path_logs + 'logs_reluplex/'
 file_dnc = cfg.path_logs + 'logs_dnc/results_p'
 file_reluval = cfg.path_logs + 'logs_reluval/results_p'
 file_nnv_star = cfg.path_logs + 'logs_nnv_star/P'
@@ -104,6 +106,43 @@ def get_data_reluval(reluval):
         print("ERROR: reluval result parse failure")
         return '0', 'ERR'
 
+def get_data_reluplex(property_size, reluplex, n1, n2):
+    try:
+        line_to_find = (n1-1)*9+n2-1
+        if property_size == 0:
+            f = open(reluplex, 'r')
+            contents = f.readlines()
+            the_line = contents[line_to_find]
+            result_flag = True
+            result_start = False
+            time_flag = True
+            time_start = False
+            result = ''
+            value = ''
+            for e in the_line:
+                if e==',' and result_start:
+                    result_start = False
+                    result_flag = False
+                if result_start:
+                    result += e
+                if e==' ' and result_flag:
+                    result_start = True
+
+                if e==',' and time_start:
+                    time_start = False
+                    time_flag = False
+                if time_start:
+                    value += e
+                if e==' ' and time_flag and (not result_flag):
+                    time_start = True
+        else:
+            value = '0'
+            result = 'None'
+
+        return value, result
+    except:
+        print("ERROR: reluplex result parse failure")
+        return '0', 'ERR'
 
 def get_data_nnv(nnv):
 # TODO: matlab detection with the following not quite right, need to not launch the gui, so probably need to modify to pass in command arguments
@@ -141,6 +180,7 @@ def create_str(filename, time_temp, result_temp):
     return temp_str
 
 
+property_size = int(sys.argv[1])
 property_num = 4
 network_n1 = 5
 network_n2 = 9
@@ -149,15 +189,15 @@ str_temp_head = '\\begin{table}\n'+\
 '\\renewcommand{\\arraystretch}{1.5}\n'+\
 '\\renewcommand{\\tabcolsep}{1.5mm}\n' +\
 '\\begin{adjustbox}{angle=0, max width=\\textwidth}\n'+\
-'\\begin{tabular}{c|ccccccccccccccc}\n'+\
+'\\begin{tabular}{c|ccccccccccccccccc}\n'+\
 '\\hline\n'+\
-' & \\multicolumn{2}{c|}{\\textbf{Zonotope}} & \\multicolumn{2}{c|}{\\textbf{Abstract Domain}} & \multicolumn{2}{c|}{\\textbf{Marabou}} & \\multicolumn{2}{c|}{\\textbf{Marabou DnC}} & \\multicolumn{2}{c|}{\\textbf{ReluVal}} & \\multicolumn{3}{c|}{\\textbf{NNV Exact Star}} & \\multicolumn{2}{c}{\\textbf{NNV Appr. Star}} \\\\ \\cline{2-16}\n'+\
-'\\multirow{-2}{*}{\\textbf{ID}} &  $VT$  & \\multicolumn{1}{c|}{$V$}    &  $VT$  & \\multicolumn{1}{c|}{$V$}    & $VT$    & \\multicolumn{1}{c|}{$V$}   & $VT$    & \\multicolumn{1}{c|}{$V$}   & $VT$   & \\multicolumn{1}{c|}{$V$}  & $N_p$ &  $VT$ & \\multicolumn{1}{c|}{$V$}   &  $VT$     & \\multicolumn{1}{c}{$V$} \\\\ \hline\n'
+' & \\multicolumn{2}{c|}{\\textbf{Zonotope}} & \\multicolumn{2}{c|}{\\textbf{Abstract Domain}} & \\multicolumn{2}{c|}{\\textbf{Reluplex}} &\multicolumn{2}{c|}{\\textbf{Marabou}} & \\multicolumn{2}{c|}{\\textbf{Marabou DnC}} & \\multicolumn{2}{c|}{\\textbf{ReluVal}} & \\multicolumn{3}{c|}{\\textbf{NNV Exact Star}} & \\multicolumn{2}{c}{\\textbf{NNV Appr. Star}} \\\\ \\cline{2-18}\n'+\
+'\\multirow{-2}{*}{\\textbf{ID}} &  $VT$  & \\multicolumn{1}{c|}{$V$}    &  $VT$  & \\multicolumn{1}{c|}{$V$}   &  $VT$  & \\multicolumn{1}{c|}{$V$}   & $VT$    & \\multicolumn{1}{c|}{$V$}   & $VT$    & \\multicolumn{1}{c|}{$V$}   & $VT$   & \\multicolumn{1}{c|}{$V$}  & $N_p$ &  $VT$ & \\multicolumn{1}{c|}{$V$}   &  $VT$     & \\multicolumn{1}{c}{$V$} \\\\ \hline\n'
 for p in range(1,property_num+1):
     str_temp = str_temp_head
     for n1 in range(1, network_n1+1):
         for n2 in range(1, network_n2+1):
-
+            reluplex = file_reluplex +'property'+str(p)+'_summary.txt'
             mara = file_mara + str(p) + '_n' + str(n1) + str(n2) + '.txt'
             dnc = file_dnc + str(p) + '_n' + str(n1) + str(n2) + '.txt'
             reluval = file_reluval + str(p) + '_n' + str(n1) + str(n2) + '.txt'
@@ -174,6 +214,8 @@ for p in range(1,property_num+1):
             if result == 'UNKNOWN':
                 result = 'UNK'
             str_temp = str_temp + '\cellcolor[HTML]{C7F7C7}'+ value + '&' + result + '&'
+            value, result = get_data_reluplex(property_size, reluplex, n1, n2)
+            str_temp = str_temp + '\cellcolor[HTML]{C7F7C7}' + value + '&' + result + '&'
             value, result = get_data_mara(mara)
             str_temp = str_temp + '\cellcolor[HTML]{C7F7C7}'+ value + '&' + result + '&'
             value, result = get_data_dnc(dnc)
@@ -207,6 +249,8 @@ str_temp_head = '\\begin{table}[] \n \
                     &                     &                        &                      & \\textbf{1h} & \\textbf{2h} &{\\textbf{10h}} &                     \\\\ \\hline \n'
 str_temp = str_temp_head
 for p in range(1,property_num+1):
+    time_reluplex = []
+    result_reluplex = []
     time_mara = []
     result_mara = []
     time_dnc = []
@@ -226,7 +270,7 @@ for p in range(1,property_num+1):
         str_temp = str_temp + '\\multirow{1}{*}{\\textbf{ACAS XU $\\phi_' + str(p) + '$}} & \\\\\\hline '
     for n1 in range(1, network_n1+1):
         for n2 in range(1, network_n2+1):
-
+            reluplex = file_reluplex + 'property' + str(p) + '_summary.txt'
             mara = file_mara + str(p) + '_n' + str(n1) + str(n2) + '.txt'
             dnc = file_dnc + str(p) + '_n' + str(n1) + str(n2) + '.txt'
             reluval = file_reluval + str(p) + '_n' + str(n1) + str(n2) + '.txt'
@@ -241,6 +285,11 @@ for p in range(1,property_num+1):
             num, value, result = get_data_nnv(nnv_abs)
             time_abs.append(float(value))
             result_abs.append(result)
+
+            value, result = get_data_reluplex(property_size, reluplex, n1,n2)
+            time_reluplex.append(float(value))
+            result_reluplex.append(result)
+
             value, result = get_data_mara(mara)
             time_mara.append(float(value))
             result_mara.append(result)
@@ -257,6 +306,8 @@ for p in range(1,property_num+1):
             time_appr.append(float(value))
             result_appr.append(result)
 
+    if property_size == 0:
+        str_temp = str_temp + create_str('Reluplex', time_reluplex, result_reluplex)
     str_temp = str_temp + create_str('Marabou', time_mara, result_mara)
     str_temp = str_temp + create_str('Marabou DnC', time_dnc, result_dnc)
     str_temp = str_temp + create_str('ReluVal', time_reluval, result_reluval)

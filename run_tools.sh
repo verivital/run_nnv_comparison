@@ -19,8 +19,15 @@ mkdir -p $OUTPUT_PREFIX/logs/logs_nnv_star
 mkdir -p $OUTPUT_PREFIX/logs/logs_nnv_star_appr
 mkdir -p $OUTPUT_PREFIX/logs/logs_nnv_abs
 mkdir -p $OUTPUT_PREFIX/logs/logs_nnv_zono
+mkdir -p $OUTPUT_PREFIX/logs/logs_reluplex
 
 # 4 acas-xu properties
+# select runtime based on considering 
+# subsets of the property sizes
+#property_size = 0 # full ranges (slowest: days of runtime)
+#property_size = 1 # medium ranges
+property_size=2 # small ranges (fast: seconds for most)
+
 p_num=4
 i=1
 
@@ -30,7 +37,7 @@ do
     cd scripts
     # generate shell scripts to call tools 
     # for each property i
-    python3 run_comparison.py $i
+    python3 run_comparison.py $i $property_size
     chmod +x run_reluval.sh
     chmod +x run_marabou.sh
     chmod +x run_marabou_dnc.sh
@@ -38,6 +45,7 @@ do
     chmod +x run_nnv_star_appr.sh
     chmod +x run_nnv_abs.sh
     chmod +x run_nnv_zono.sh
+    chmod +x run_reluplex.sh
     cd ..
     ./scripts/run_reluval.sh
     ./scripts/run_marabou.sh
@@ -51,7 +59,11 @@ do
         ./scripts/run_nnv_zono.sh
     else
         echo "Matlab not detected, skipping NNV"
-    fi    
+    fi
+
+    if [$property_size == 0]; then
+        ./scripts/run_reluplex.sh
+    fi
     
     rm -f scripts/run_reluval.sh
     rm -f scripts/run_marabou.sh
@@ -60,10 +72,11 @@ do
     rm -f scripts/run_nnv_star_appr.sh
     rm -f scripts/run_nnv_abs.sh
     rm -f scripts/run_nnv_zono.sh
+    rm -f scripts/run_reluplex.sh
     ((i++))
 done
 
-python3 scripts/write_latex_table.py
+python3 scripts/write_latex_table.py $property_size
 echo "All done with ACAS-Xu comparisons!"
 
 echo "Starting closed-loop CPS examples in NNV"
