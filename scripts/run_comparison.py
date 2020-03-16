@@ -68,4 +68,4 @@ std = [60261.0,6.28318530718,6.28318530718,1100.0,1200.0,373.94992]
 wp.write_property(property, x, y, mean, std)
 
 # generate bash scripts to run comparison
-cs.create_bash(property, property_size)
+cs.create_bash(property)

@@ -2,7 +2,7 @@ import numpy as np
 import os
 import batch_config as cfg
 
-def create_bash(p, p_size):
+def create_bash(p):
     network_n1 = 5
     network_n2 = 9
     # Marabou
@@ -112,21 +112,17 @@ def create_bash(p, p_size):
     f.close()
 
     # reluplex
-    if p_size == 0:
-        filename = 'run_reluplex.sh'
-        f = open(filename, 'w')
-        lines = '#!/bin/bash\n\nTIMEOUT=10h \n\n timeout --foreground --signal=SIGQUIT $TIMEOUT ./check_properties/bin/property1.elf ./nnet/ACASXU_run2a_1_1_batch_2000.nnet '
-        for i in range(1,network_n1+1):
-            for j in range(1,network_n2+1):
-                line_temp = cfg.path_logs+'logs_reluplex/property'+str(p)+'_summary.txt 2>&1 | tee '+cfg.path_logs+'logs_reluplex/property'+str(p)+'_stats_'+str(i)+'_'+str(j)+'.txt\n'
-                lines = lines + line_temp
+    filename = 'run_reluplex.sh'
+    f = open(filename, 'w')
+    lines = '#!/bin/bash\n\nTIMEOUT=10h \n\n'
+    for i in range(1,network_n1+1):
+        for j in range(1,network_n2+1):
+            line_temp = 'timeout --foreground --signal=SIGQUIT $TIMEOUT ./ReluplexCav2017/check_properties/bin/property'+str(p)+'.elf ./ReluplexCav2017/nnet/ACASXU_run2a_'+str(i)+'_'+str(j)+'_batch_2000.nnet ' +\
+                        cfg.path_logs+'logs_reluplex/property'+str(p)+'_summary.txt 2>&1 | tee '+cfg.path_logs+'logs_reluplex/property'+str(p)+'_stats_'+str(i)+'_'+str(j)+'.txt\n'
+            lines = lines + line_temp
 
-        f.write(lines)
-        f.close()
-    else:
-        filename = 'run_reluplex.sh'
-        f = open(filename, 'w')
-        f.close()
+    f.write(lines)
+    f.close()
 
 
 

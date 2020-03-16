@@ -11,6 +11,11 @@ else
 	OUTPUT_PREFIX=./
 fi
 
+FILE=$OUTPUT_PREFIX/logs
+if [ -d "$FILE" ]; then
+    sudo rm -r $OUTPUT_PREFIX/logs
+fi
+
 mkdir -p $OUTPUT_PREFIX/logs/logs_dnc
 mkdir -p $OUTPUT_PREFIX/logs/logs_mara
 mkdir -p $OUTPUT_PREFIX/logs/logs_reluval
@@ -47,22 +52,19 @@ do
     chmod +x run_nnv_zono.sh
     chmod +x run_reluplex.sh
     cd ..
+    ./scripts/run_reluplex.sh
     ./scripts/run_reluval.sh
     ./scripts/run_marabou.sh
     ./scripts/run_marabou_dnc.sh
     
     # skip running nnv if matlab is not installed
     if command -v matlab 2>/dev/null; then
-        ./scripts/run_nnv_star.sh
+        sudo ./scripts/run_nnv_star.sh
         ./scripts/run_nnv_star_appr.sh
         ./scripts/run_nnv_abs.sh
         ./scripts/run_nnv_zono.sh
     else
         echo "Matlab not detected, skipping NNV"
-    fi
-
-    if [$property_size == 0]; then
-        ./scripts/run_reluplex.sh
     fi
     
     rm -f scripts/run_reluval.sh
@@ -76,7 +78,7 @@ do
     ((i++))
 done
 
-python3 scripts/write_latex_table.py $property_size
+python3 scripts/write_latex_table.py
 echo "All done with ACAS-Xu comparisons!"
 
 echo "Starting closed-loop CPS examples in NNV"

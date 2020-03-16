@@ -44,6 +44,39 @@ def write_property_marabou(p, x, y, mean, std):
 
     afile.close()
 
+def write_property_reluplex(p, x):
+    line_to_add = '        reluplex.setLowerBound(nodeToVars[Index(0, 0, true)], normalizeInput(0, '+str(x[0][0])+', neuralNetwork));\n ' \
+                  '       reluplex.setUpperBound(nodeToVars[Index(0, 0, true)], normalizeInput(0, '+str(x[1][0])+', neuralNetwork));\n ' \
+                  '       reluplex.setLowerBound(nodeToVars[Index(0, 1, true)], normalizeInput(1, '+str(x[0][1])+', neuralNetwork));\n ' \
+                  '       reluplex.setUpperBound(nodeToVars[Index(0, 1, true)], normalizeInput(1, '+str(x[1][1])+', neuralNetwork));\n ' \
+                  '       reluplex.setLowerBound(nodeToVars[Index(0, 2, true)], normalizeInput(2, '+str(x[0][2])+', neuralNetwork));\n ' \
+                  '       reluplex.setUpperBound(nodeToVars[Index(0, 2, true)], normalizeInput(2, '+str(x[1][2])+', neuralNetwork));\n ' \
+                  '       reluplex.setLowerBound(nodeToVars[Index(0, 3, true)], normalizeInput(3, '+str(x[0][3])+', neuralNetwork));\n ' \
+                  '       reluplex.setUpperBound(nodeToVars[Index(0, 3, true)], normalizeInput(3, '+str(x[1][3])+', neuralNetwork));\n ' \
+                  '       reluplex.setLowerBound(nodeToVars[Index(0, 4, true)], normalizeInput(4, '+str(x[0][4])+', neuralNetwork));\n ' \
+                  '       reluplex.setUpperBound(nodeToVars[Index(0, 4, true)], normalizeInput(4, '+str(x[1][4])+', neuralNetwork));\n\n'
+
+    filename = '../ReluplexCav2017/check_properties/property'+str(p)+'/main.cpp'
+    f = open(filename, 'r')
+    contents = f.readlines()
+    f.close()
+    line_to_find = '    try\n'
+    idx0 = contents.index(line_to_find)+7
+    n = idx0
+    while True:
+        n += 1
+        xx = contents[n][8:14]
+        if contents[n][8:14] == 'printf':
+            contents[n - 1] = line_to_add
+            break
+        else:
+            contents[n-1] = ''
+
+    f = open(filename, 'w')
+    contents = "".join(contents)
+    f.write(contents)
+    f.close()
+
 
 def write_property_reluval(p,x):
     filename = '../ReluVal/nnet.c'
@@ -277,6 +310,13 @@ def write_property(property, x, y, mean, std):
         write_property_marabou(property, x, y, mean, std)
     except:
         print('Error in adding property into Marabou!')
+
+    # reluplex
+    try:
+        write_property_reluplex(property, x)
+        os.system('cd ../ReluplexCav2017/check_properties && make')
+    except:
+        print('Error in editting Reluplex!')
 
     # ReluVal
     try:

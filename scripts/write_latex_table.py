@@ -106,39 +106,36 @@ def get_data_reluval(reluval):
         print("ERROR: reluval result parse failure")
         return '0', 'ERR'
 
-def get_data_reluplex(property_size, reluplex, n1, n2):
+def get_data_reluplex(reluplex, n1, n2):
     try:
         line_to_find = (n1-1)*9+n2-1
-        if property_size == 0:
-            f = open(reluplex, 'r')
-            contents = f.readlines()
-            the_line = contents[line_to_find]
-            result_flag = True
-            result_start = False
-            time_flag = True
-            time_start = False
-            result = ''
-            value = ''
-            for e in the_line:
-                if e==',' and result_start:
-                    result_start = False
-                    result_flag = False
-                if result_start:
-                    result += e
-                if e==' ' and result_flag:
-                    result_start = True
+        f = open(reluplex, 'r')
+        contents = f.readlines()
+        the_line = contents[line_to_find]
+        result_flag = True
+        result_start = False
+        time_flag = True
+        time_start = False
+        result = ''
+        value = ''
+        for e in the_line:
+            if e==',' and result_start:
+                result_start = False
+                result_flag = False
+            if result_start:
+                result += e
+            if e==' ' and result_flag:
+                result_start = True
 
-                if e==',' and time_start:
-                    time_start = False
-                    time_flag = False
-                if time_start:
-                    value += e
-                if e==' ' and time_flag and (not result_flag):
-                    time_start = True
-        else:
-            value = '0'
-            result = 'None'
+            if e==',' and time_start:
+                time_start = False
+                time_flag = False
+            if time_start:
+                value += e
+            if e==' ' and time_flag and (not result_flag):
+                time_start = True
 
+        value = str(int(value)/1000)
         return value, result
     except:
         print("ERROR: reluplex result parse failure")
@@ -168,19 +165,19 @@ def create_str(filename, time_temp, result_temp):
     temp_sat = sum('SAT' == s for s in result_temp)
     temp_unsat = sum('UNSAT' == s for s in result_temp)
     temp_unk = sum('UNKNOWN' == s for s in result_temp)
+    temp_error = sum('ERROR' == s for s in result_temp)
     time_temp_np = np.array(time_temp)
     time_temp_1h = len(time_temp_np[time_temp_np >= 3600])
     time_temp_2h = len(time_temp_np[time_temp_np >= 7200])
     time_temp_10h = len(time_temp_np[time_temp_np >= 36000])
     time_total = round(sum(time_temp_np),2)
 
-    temp_str = filename + '&' + str(temp_sat) + '&' + str(temp_unsat) + '&' + str(temp_unk) + \
+    temp_str = filename + '&' + str(temp_sat) + '&' + str(temp_unsat) + '&' + str(temp_unk) + '&' + str(temp_error) + \
         '&' + str(time_temp_1h) + '&' + str(time_temp_2h) + '&' + str(time_temp_10h) + '&' + str(time_total) +'\\\\ \n'
 
     return temp_str
 
 
-property_size = int(sys.argv[1])
 property_num = 4
 network_n1 = 5
 network_n2 = 9
@@ -214,7 +211,7 @@ for p in range(1,property_num+1):
             if result == 'UNKNOWN':
                 result = 'UNK'
             str_temp = str_temp + '\cellcolor[HTML]{C7F7C7}'+ value + '&' + result + '&'
-            value, result = get_data_reluplex(property_size, reluplex, n1, n2)
+            value, result = get_data_reluplex(reluplex, n1, n2)
             str_temp = str_temp + '\cellcolor[HTML]{C7F7C7}' + value + '&' + result + '&'
             value, result = get_data_mara(mara)
             str_temp = str_temp + '\cellcolor[HTML]{C7F7C7}'+ value + '&' + result + '&'
@@ -243,10 +240,10 @@ str_temp_head = '\\begin{table}[] \n \
 \\renewcommand{\\arraystretch}{1.5} \n \
 \\renewcommand{\\tabcolsep}{1.5mm} \n \
 \\begin{adjustbox}{angle=0, max width=\\textwidth}\n \
-\\begin{tabular}{l|ccccccc} \n \
+\\begin{tabular}{l|cccccccc} \n \
 \\hline \n \
-\\multirow{2}{*}{\\textbf{ACAS XU $\\phi_1$}} &\\multirow{2}{*}{\\textbf{SAT}} & \\multirow{2}{*}{\\textbf{UNSAT}} & \\multirow{2}{*}{\\textbf{UNK}} & \\multicolumn{3}{l}{\\textbf{TIMEOUT}}      & \\multirow{2}{*}{\\textbf{TIME}}  \\\\ \\cline{5-7} \n \
-                    &                     &                        &                      & \\textbf{1h} & \\textbf{2h} &{\\textbf{10h}} &                     \\\\ \\hline \n'
+\\multirow{2}{*}{\\textbf{ACAS XU $\\phi_1$}} &\\multirow{2}{*}{\\textbf{SAT}} & \\multirow{2}{*}{\\textbf{UNSAT}} & \\multirow{2}{*}{\\textbf{UNK}} & \\multirow{2}{*}{\\textbf{ERROR}} & \\multicolumn{3}{l}{\\textbf{TIMEOUT}}      & \\multirow{2}{*}{\\textbf{TIME}}  \\\\ \\cline{6-8} \n \
+                    &                     &                        &                        &                      & \\textbf{1h} & \\textbf{2h} &{\\textbf{10h}} &                     \\\\ \\hline \n'
 str_temp = str_temp_head
 for p in range(1,property_num+1):
     time_reluplex = []
@@ -286,7 +283,7 @@ for p in range(1,property_num+1):
             time_abs.append(float(value))
             result_abs.append(result)
 
-            value, result = get_data_reluplex(property_size, reluplex, n1,n2)
+            value, result = get_data_reluplex( reluplex, n1,n2)
             time_reluplex.append(float(value))
             result_reluplex.append(result)
 
