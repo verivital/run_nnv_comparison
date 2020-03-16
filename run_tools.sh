@@ -13,7 +13,7 @@ fi
 
 FILE=$OUTPUT_PREFIX/logs
 if [ -d "$FILE" ]; then
-    sudo rm -r $OUTPUT_PREFIX/logs
+    rm -r $OUTPUT_PREFIX/logs
 fi
 
 mkdir -p $OUTPUT_PREFIX/logs/logs_dnc
@@ -59,7 +59,7 @@ do
     
     # skip running nnv if matlab is not installed
     if command -v matlab 2>/dev/null; then
-        sudo ./scripts/run_nnv_star.sh
+        ./scripts/run_nnv_star.sh
         ./scripts/run_nnv_star_appr.sh
         ./scripts/run_nnv_abs.sh
         ./scripts/run_nnv_zono.sh
