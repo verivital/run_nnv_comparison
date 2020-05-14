@@ -1,5 +1,9 @@
-# NNV: A Tool for the Verification of Deep Neural Networks and Learning-enabled Cyber-Physical Systems
+# NNV: NNV: The Neural Network Verification Tool for Deep Neural Networks and Learning-Enabled Cyber-Physical Systems
 Hoang Dung Tran, Xiaodong Yang, Diego Manzanas, Patrick Musau, Luan Nguyen, Weiming Xiang, Stanley Bak and Taylor T Johnson
+32nd International Conference on Computer-Aided Verification (CAV 2020)
+
+## CodeOcean Capsule DOI:
+https://doi.org/10.24433/CO.0221760.v1
 
 ## Source Code:
 https://github.com/verivital/nnv
@@ -63,12 +67,15 @@ Matlab 2018b or later (may work on earlier versions, but untested)
 
 3a. NNV is configured to run without installation and without dependence upon users having Matlab licenses through CodeOcean, which has an agreement with the MathWorks to provide publicly available infrastructure for reproducing computational research.
 
-3b. The current draft CodeOcean capsule may be accessed here, a login is required (no public sharing by link is available until the capsule is published and has an updated DOI):
+3b. The latest CodeOcean capsule may be accessed here, a login is required (no public sharing by link is available until the capsule is published and has an updated DOI):
 
 https://codeocean.com/capsule/1314285/
 
-Username: see easychair
-Password: see easychair
+Username: email authors
+Password: email authors
+
+The CodeOcean capsule corresponding to the paper at the time of sumbission is available here:
+https://doi.org/10.24433/CO.0221760.v1
 
 3c. After opening the capsule through the above URL, one can view code, navigate existing reproduced results, etc.
 
@@ -122,7 +129,9 @@ https://github.com/verivital/nnv/tree/cav2020/code/nnv/tests
 
 There are a few other commands listed within the run_codeocean file as further examples, as we have not presented all examples, case studies, etc. that NNV has been evaluated on within this paper due to space, and there are significantly more.
 
-- If accepted, we will update the published CodeOcean capsule with all reproducible results described in this paper to generate a new DOI so others can publicly reproduce. Due to the way CodeOcean works (by generating DOIs for published capsules), we have not yet published the updated capsule and would do so after acceptance.
+- We have updated the published CodeOcean capsule with all reproducible results described in this paper and generated a new DOI so others can publicly reproduce, available here:
+
+https://doi.org/10.24433/CO.0221760.v1
 
 - A prior publicly accessible CodeOcean capsule that reproduces all the tests in NNV is available here:
 
