@@ -1,4 +1,4 @@
-# NNV: NNV: The Neural Network Verification Tool for Deep Neural Networks and Learning-Enabled Cyber-Physical Systems
+# NNV: The Neural Network Verification Tool for Deep Neural Networks and Learning-Enabled Cyber-Physical Systems
 Hoang Dung Tran, Xiaodong Yang, Diego Manzanas, Patrick Musau, Luan Nguyen, Weiming Xiang, Stanley Bak and Taylor T Johnson
 32nd International Conference on Computer-Aided Verification (CAV 2020)
 
